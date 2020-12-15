@@ -1,0 +1,21 @@
+<form (ngSubmit)="send()">
+<h4>Location</h4>
+<mat-form-field appearance="fill">
+	<mat-label>Choose a city</mat-label>
+	<mat-select [(value)]="selectedCity">
+		<mat-option [value]="option.value" *ngFor="let option of cities">{{ option.viewValue }}</mat-option>
+	</mat-select>
+</mat-form-field>
+<p>You selected: {{selectedCity}}</p>
+<h4>Description</h4>
+<mat-form-field appearance="fill">
+	<mat-label>Choose a language</mat-label>
+	<mat-select [(value)]="selectedLanguage">
+		<mat-option [value]="option.value" *ngFor="let option of languages">{{ option.viewValue }}</mat-option>
+	</mat-select>
+</mat-form-field>
+<p>You selected: {{selectedLanguage}}</p>
+<div class="example-button-row">
+  <button mat-raised-button color="primary">Send</button>
+</div>
+</form>
