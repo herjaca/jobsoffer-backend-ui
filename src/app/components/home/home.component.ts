@@ -11,6 +11,12 @@ interface Language {
   viewValue: string;
 };
 
+interface Response{
+  company:String;
+  title:String;
+  type:String
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
@@ -37,30 +43,26 @@ export class HomeComponent  {
     {value: 'go', viewValue: 'Go'}
   ];
 
+
+  jobs:any[] = [];
   selectedCity = this.cities[1].value;
   selectedLanguage = this.languages[1].value;
 
-  
-
-  // ngOnInit(): void {
-      // this.jobsOfferService.testRequest().subscribe(data=>{
-      //   console.log(data)
-      // })
-  // }
-
-  // send(languageSelected:string, citySelected:string){
-    
-
-  //   let ip = window.location.origin
-  //   let now : string = new Date().toISOString();
-
-  //   this.jobsOfferService.search(now, languageSelected, citySelected, ip);
-  // }
-  send(){
-    console.log('LOCATION: '+this.selectedCity);
-    console.log('DESCRIPTION: '+this.selectedLanguage);
-    let ip = window.location.origin
+  search(){
+    let currentIp = window.location.origin
     let now : string = new Date().toISOString();
-    this.jobsOfferService.search(now, this.selectedLanguage, this.selectedCity, ip);
+    this.jobsOfferService.search(now, this.selectedLanguage, this.selectedCity, currentIp).subscribe(
+      (response) =>{
+        this.jobs = []
+        console.log(response);
+        for (const job of (response as any)) {
+          this.jobs.push({
+            company: job.company,
+            description: job.description,
+            type:job.type,
+            title:job.title
+          });
+        }
+    });
   }
 }

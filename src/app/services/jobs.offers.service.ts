@@ -10,17 +10,13 @@ export class JobsOffersService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public testRequest(){
-    return this.httpClient.get(this.REST_API_SERVER);
-  }
+  // public testRequest(){
+  //   return this.httpClient.get(this.REST_API_SERVER);
+  // }
 
   search(time:string, description:string, location:string, userIpAddress:string){
-    console.log("url: "+this.REST_API_SERVER);
-    let body =  { time,description,location,userIpAddress}
-    console.log(body)
-    let response = this.httpClient.post(this.REST_API_SERVER,body);
-    console.log( JSON.stringify(response));
-    return response;
+    let body =  { time,description,location,userIpAddress};
+    return this.httpClient.post(this.REST_API_SERVER,body);
   }
 
 }
