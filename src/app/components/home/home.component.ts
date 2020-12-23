@@ -51,18 +51,27 @@ export class HomeComponent  {
   search(){
     let currentIp = window.location.origin
     let now : string = new Date().toISOString();
-    this.jobsOfferService.search(now, this.selectedLanguage, this.selectedCity, currentIp).subscribe(
+    let description = this.selectedLanguage;
+    let location = this.selectedCity;
+    this.jobsOfferService.searchJobs(description, location).subscribe(
       (response) =>{
-        this.jobs = []
-        console.log(response);
-        for (const job of (response as any)) {
-          this.jobs.push({
-            company: job.company,
-            description: job.description,
-            type:job.type,
-            title:job.title
-          });
-        }
+        this.jobsOfferService.saveSearch(now,description,location,currentIp).subscribe(
+          response => console.log(response),
+          error => console.log(error));
+        this.jobsResponse(response);
     });
+  }
+
+  private jobsResponse(response: Object) {
+    this.jobs = [];
+    console.log(response);
+    for (const job of (response as any)) {
+      this.jobs.push({
+        company: job.company,
+        description: job.description,
+        type: job.type,
+        title: job.title
+      });
+    }
   }
 }
