@@ -14,8 +14,8 @@
 </mat-form-field>
 
 <div style="padding: 13px;">
-    <mat-card *ngIf="jobs.length === 0">
-		Nothing found for: {{selectedLanguage}} in {{ selectedCity }}
+    <mat-card *ngIf="!first && jobs.length === 0 ">
+		Nothing found for: {{refreshLanguage}} in {{ refreshCity }}
 	</mat-card> 
 
     <mat-card *ngFor="let job of jobs" style="margin-top:11px;">

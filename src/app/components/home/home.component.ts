@@ -48,6 +48,10 @@ export class HomeComponent  {
   selectedCity = this.cities[1].value;
   selectedLanguage = this.languages[1].value;
 
+  first = true
+  refreshLanguage:string = ""
+  refreshCity:string = ""
+
   search(){
     let currentIp = window.location.origin
     let now : string = new Date().toISOString();
@@ -73,5 +77,8 @@ export class HomeComponent  {
         title: job.title
       });
     }
+    this.refreshLanguage = this.selectedLanguage;
+    this.refreshCity = this.selectedCity;
+    this.first = false;
   }
 }
