@@ -15,7 +15,7 @@
 
 <div style="padding: 13px;">
     <mat-card *ngIf="jobs.length === 0">
-		Nothing found
+		Nothing found for: {{selectedLanguage}} in {{ selectedCity }}
 	</mat-card> 
 
     <mat-card *ngFor="let job of jobs" style="margin-top:11px;">
