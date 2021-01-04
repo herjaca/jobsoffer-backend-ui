@@ -38,4 +38,7 @@ export class JobsOffersService {
     return this.httpClient.post(this.REST_API_SERVER,body).pipe(catchError(this.handleError));
   }
 
+  getPublicIP(){
+    return this.httpClient.get('https://api.ipify.org?format=json');
+  }
 }

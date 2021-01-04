@@ -48,18 +48,19 @@ export class HomeComponent  {
   selectedCity = this.cities[1].value;
   selectedLanguage = this.languages[1].value;
 
-  first = true
-  refreshLanguage:string = ""
-  refreshCity:string = ""
+  first = true;
+  refreshLanguage:string = "";
+  refreshCity:string = "";
+  publicIP:string = ""
 
   search(){
-    let currentIp = window.location.origin
+    this.getPublicIP();
     let now : string = new Date().toISOString();
     let description = this.selectedLanguage;
     let location = this.selectedCity;
     this.jobsOfferService.searchJobs(description, location).subscribe(
       (response) =>{
-        this.jobsOfferService.saveSearch(now,description,location,currentIp).subscribe(
+        this.jobsOfferService.saveSearch(now,description,location,this.publicIP).subscribe(
           response => console.log(response),
           error => console.log(error));
         this.jobsResponse(response);
@@ -81,4 +82,12 @@ export class HomeComponent  {
     this.refreshCity = this.selectedCity;
     this.first = false;
   }
+
+  private getPublicIP(){
+    this.jobsOfferService.getPublicIP().subscribe((res:any)=>{  
+      this.publicIP = res.ip;  
+    });
+  }
+
+
 }
