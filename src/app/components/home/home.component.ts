@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { JobsOffersService } from '../../services/jobs.offers.service'
+import { JobsOffersService } from '../../services/jobs.offers.service';
+import { formatDate } from "@angular/common";
 
 interface City {
   value: string;
@@ -51,20 +52,29 @@ export class HomeComponent  {
   first = true;
   refreshLanguage:string = "";
   refreshCity:string = "";
-  publicIP:string = ""
+  publicIP:string = "";
+
 
   search(){
     this.getPublicIP();
-    let now : string = new Date().toISOString();
+    let formattedDate = this.formatNowDate();
     let description = this.selectedLanguage;
     let location = this.selectedCity;
     this.jobsOfferService.searchJobs(description, location).subscribe(
       (response) =>{
-        this.jobsOfferService.saveSearch(now,description,location,this.publicIP).subscribe(
+        this.jobsOfferService.saveSearch(formattedDate,description,location,this.publicIP).subscribe(
           response => console.log(response),
           error => console.log(error));
         this.jobsResponse(response);
     });
+  }
+
+  private formatNowDate() {
+    let now = new Date();
+    let format = 'YYYY-MM-dd';
+    let locale = 'en-US';
+    let formattedDate = formatDate(now, format, locale);
+    return formattedDate;
   }
 
   private jobsResponse(response: Object) {
@@ -78,6 +88,10 @@ export class HomeComponent  {
         title: job.title
       });
     }
+    this.refresh();
+  }
+
+  private refresh() {
     this.refreshLanguage = this.selectedLanguage;
     this.refreshCity = this.selectedCity;
     this.first = false;
@@ -88,6 +102,5 @@ export class HomeComponent  {
       this.publicIP = res.ip;  
     });
   }
-
 
 }
